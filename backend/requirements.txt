@@ -34,7 +34,6 @@ pydantic_core==2.27.2
 Pygments==2.19.1
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
-python-dotenv==1.0.1
 python-multipart==0.0.20
 pytz==2025.1
 PyYAML==6.0.2
@@ -64,3 +63,4 @@ watchfiles==1.0.4
 websockets==14.2
 django-cors-headers
 djangorestframework-simplejwt
+dj-database-url
