@@ -9,6 +9,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
 import logging
 
+# docker exec -it promoease-backend-backend-1 python test_views.py
+
 # Get the custom User model
 User = get_user_model()
 
@@ -59,7 +61,6 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         tokens = serializer.validated_data  # Returns {'access': ..., 'refresh': ...}
-
         response = Response({"message": "Login successful"}, status=status.HTTP_200_OK)
 
         # Set JWT in HttpOnly Secure Cookie
@@ -73,7 +74,7 @@ class LoginView(APIView):
         )
 
         # Return the refresh token in the response (frontend can store it securely)
-        return response({"refresh": tokens["refresh"]}, status=status.HTTP_200_OK)
+        return response
 
 
 class LogoutView(APIView):

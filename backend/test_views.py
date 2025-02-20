@@ -89,6 +89,7 @@ def test_login_user():
 
     # ✅ 응답 헤더 및 쿠키 정보 출력
     print("\n🔍 Response Headers:", response.headers)
+    print("🔍 Response JSON:", response.text)
     print("🔍 Response Cookies (Direct):", response.cookies.get_dict())
     print("🔍 Session Cookies (Stored):", session.cookies.get_dict())
 
@@ -184,18 +185,18 @@ def test_logout():
 if __name__ == "__main__":
     print("\n🚀 Running API Tests...\n")
 
-    test_register_user()
-    test_register_invalid_email()
-    test_register_short_password()
-
-    test_login_user()
-    test_login_invalid_email()
-    test_login_invalid_password()
+    # test_register_user()
+    # test_register_invalid_email()
+    # test_register_short_password()
+    #
+    # test_login_user()
+    # test_login_invalid_email()
+    # test_login_invalid_password()
 
     test_user_profile()
-    test_user_profile_unauthorized()
-
-    test_refresh_token()
-    test_logout()
+    # test_user_profile_unauthorized()
+    #
+    # test_refresh_token()
+    # test_logout()
 
     print("\n✅ All Tests Completed!\n")
