@@ -72,7 +72,7 @@ class LoginView(APIView):
             samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"],  # Cross-site protection
             max_age=60 * 60 * 24,  # Valid for 1 day
         )
-
+        logger.info(f"🛠 Set-Cookie Header: {response.cookies}")
         # Return the refresh token in the response (frontend can store it securely)
         return response
 

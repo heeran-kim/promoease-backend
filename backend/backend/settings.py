@@ -62,6 +62,9 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "Lax",
 }
 
+CSRF_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
+SESSION_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
+
 # DRF Default Authentication Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -76,7 +79,7 @@ CORS_ALLOW_CREDENTIALS = True
 #     origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin
 # ]
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
 
 # Allow all headers and methods for pre-flight (OPTIONS) requests
 # CORS_ALLOW_HEADERS = ["*"]
