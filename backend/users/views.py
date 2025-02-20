@@ -73,7 +73,7 @@ class LoginView(APIView):
         )
 
         # Return the refresh token in the response (frontend can store it securely)
-        return Response({"refresh": tokens["refresh"]}, status=status.HTTP_200_OK)
+        return response({"refresh": tokens["refresh"]}, status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):
