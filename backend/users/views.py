@@ -9,7 +9,7 @@ from users.authentication import CustomJWTAuthentication
 from django.conf import settings
 import logging
 
-# docker exec -it promoease-backend-backend-1 python test_views.py
+# docker exec -it promoease-backend-backend-1 python test/test_views.py
 
 # Get the custom User model
 User = get_user_model()
@@ -90,6 +90,8 @@ class LogoutView(APIView):
         Handles user logout by blacklisting the refresh token.
         - Also removes JWT access token from HttpOnly Cookie.
         """
+        logger.info(f"🛠 Logout Request: {request.user}")
+
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
         # Delete JWT access token from cookies
@@ -101,6 +103,7 @@ class LogoutView(APIView):
             try:
                 token = RefreshToken(refresh_token)
                 token.blacklist()
+                logger.info("✅ Refresh Token Blacklisted")
             except Exception as e:
                 logger.error(f"❌ Failed to blacklist refresh token: {e}")
 

@@ -11,6 +11,7 @@ __pycache__/
 # Django-related ignores
 media/
 staticfiles/
+test/
 
 # Ignore uploaded images
 ai-api/uploads/
