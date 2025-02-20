@@ -65,7 +65,8 @@ SIMPLE_JWT = {
 # DRF Default Authentication Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication', # Authorization header
+        "users.authentication.CustomJWTAuthentication", # http cookie
     ),
 }
 

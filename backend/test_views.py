@@ -142,7 +142,7 @@ def test_user_profile():
     """Test fetching user profile using stored JWT cookie"""
     test_login_user()  # 로그인 선행
     response = session.get(f"{BASE_URL}/me/")  # 세션 쿠키 기반 인증
-
+    print("🔍 Session Cookies:", session.cookies.get_dict())
     if response.status_code == status.HTTP_200_OK:
         log_result("User Profile", True, response.json())
     else:
@@ -192,11 +192,11 @@ if __name__ == "__main__":
     # test_login_user()
     # test_login_invalid_email()
     # test_login_invalid_password()
-
-    test_user_profile()
-    # test_user_profile_unauthorized()
     #
-    # test_refresh_token()
-    # test_logout()
+    # test_user_profile()
+    # test_user_profile_unauthorized()
+
+    test_refresh_token()
+    test_logout()
 
     print("\n✅ All Tests Completed!\n")

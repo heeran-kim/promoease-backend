@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from users.authentication import CustomJWTAuthentication
 from django.conf import settings
 import logging
 
@@ -112,13 +112,14 @@ class UserProfileView(APIView):
     API to get the currently authenticated user's information.
     Requires the user to be logged in (JWT authentication).
     """
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [CustomJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
         Retrieves user profile details from the authenticated request.
         """
+        logger.info(f"🛠 Received Cookies: {request.COOKIES}")
         user = request.user
         return Response({
             "email": user.email,
