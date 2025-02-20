@@ -57,7 +57,7 @@ SIMPLE_JWT = {
     # ✅ (HttpOnly 쿠키 지원)
     "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
-    "AUTH_COOKIE_SECURE": os.getenv("USE_RENDER_DB", "False") == "True",  # 개발 환경에서는 False, 운영 환경에서는 True
+    "AUTH_COOKIE_SECURE": os.getenv("ENV", "development") == "production",
     "AUTH_COOKIE_PATH": "/",
     "AUTH_COOKIE_SAMESITE": "None",
 }
@@ -79,7 +79,7 @@ CORS_ALLOW_CREDENTIALS = True
 #     origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin
 # ]
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,https://promoease-frontend.vercel.app").split(",")
 
 # Allow all headers and methods for pre-flight (OPTIONS) requests
 # CORS_ALLOW_HEADERS = ["*"]

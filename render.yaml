@@ -18,6 +18,8 @@ services:
         value: "http://localhost:3000,https://promoease-frontend.vercel.app,https://backend-yiuo.onrender.com"
       - key: ALLOWED_HOSTS
         value: "localhost,127.0.0.1,0.0.0.0,promoease-frontend.vercel.app,backend-yiuo.onrender.com"
+      - key: ENV
+        value: "production" # "production", "development"
 
   - name: ai-api
     type: web
