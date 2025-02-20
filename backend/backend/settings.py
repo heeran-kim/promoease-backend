@@ -57,7 +57,7 @@ SIMPLE_JWT = {
     # ✅ (HttpOnly 쿠키 지원)
     "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
-    "AUTH_COOKIE_SECURE": os.getenv("USE_RENDER_DB", "False") == "True",  # 개발 환경에서는 False, 운영 환경에서는 True
+    "AUTH_COOKIE_SECURE": False, # os.getenv("USE_RENDER_DB", "False") == "True",  # 개발 환경에서는 False, 운영 환경에서는 True
     "AUTH_COOKIE_PATH": "/",
     "AUTH_COOKIE_SAMESITE": "None",
 }
