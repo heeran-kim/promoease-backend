@@ -48,16 +48,16 @@ INSTALLED_APPS = [
 
 # JWT Settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1), # Access Token expiration time
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7), # Refresh Token expiration time
+    "ROTATE_REFRESH_TOKENS": True, # Issue a new Refresh Token when issuing a new Access Token
+    "BLACKLIST_AFTER_ROTATION": True, # Invalidate the previous Refresh Token after rotation
     "AUTH_HEADER_TYPES": ("Bearer",),
 
     # ✅ (HttpOnly 쿠키 지원)
-    "AUTH_COOKIE": "access_token",
+    "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
-    "AUTH_COOKIE_SECURE": False,  # 개발 환경에서는 False, 운영 환경에서는 True
+    "AUTH_COOKIE_SECURE": os.getenv("USE_RENDER_DB", "False") == "True",  # 개발 환경에서는 False, 운영 환경에서는 True
     "AUTH_COOKIE_PATH": "/",
     "AUTH_COOKIE_SAMESITE": "Lax",
 }
