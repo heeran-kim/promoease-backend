@@ -64,3 +64,4 @@ websockets==14.2
 django-cors-headers
 djangorestframework-simplejwt
 dj-database-url
+beautifulsoup4

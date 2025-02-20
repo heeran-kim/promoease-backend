@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,11 +46,24 @@ INSTALLED_APPS = [
     'users',
 ]
 
+# JWT Settings
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+
+    # ✅ (HttpOnly 쿠키 지원)
+    "AUTH_COOKIE": "access_token",
+    "AUTH_COOKIE_HTTP_ONLY": True,
+    "AUTH_COOKIE_SECURE": False,  # 개발 환경에서는 False, 운영 환경에서는 True
+    "AUTH_COOKIE_PATH": "/",
+    "AUTH_COOKIE_SAMESITE": "Lax",
+}
+
 # DRF Default Authentication Settings
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -56,22 +71,16 @@ REST_FRAMEWORK = {
 
 # CORS Settings
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin
-]
+# CORS_ALLOWED_ORIGINS = [
+#     origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin
+# ]
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000").split(",")
+
 # Allow all headers and methods for pre-flight (OPTIONS) requests
-CORS_ALLOW_HEADERS = ["*"]
-CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+# CORS_ALLOW_HEADERS = ["*"]
+# CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
-
-# JWT Settings
-from datetime import timedelta
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-}
 
 # Middleware Settings
 MIDDLEWARE = [
@@ -85,8 +94,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Django Admin & Template Setting
 ROOT_URLCONF = "backend.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -102,60 +111,52 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = "backend.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-import dj_database_url
-
-if os.getenv("USE_RENDER_DB") == "true":
-    DATABASES = {
-        'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+DATABASES = {
+    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    if os.getenv("USE_RENDER_DB") == "true"
+    else {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": os.getenv("DATABASE_PORT"),
     }
-else:
-    DATABASES = {
-        "default": {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv("DATABASE_NAME"),
-            'USER': os.getenv("DATABASE_USER"),
-            'PASSWORD': os.getenv("DATABASE_PASSWORD"),
-            'HOST': os.getenv("DATABASE_HOST"),
-            'PORT': os.getenv("DATABASE_PORT"),
-        }
-    }
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+#     },
+# ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
+# LANGUAGE_CODE = "en-us"
+#
+# TIME_ZONE = "UTC"
+#
+# USE_I18N = True
+#
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -168,8 +169,43 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Django Auth Setting
 AUTH_USER_MODEL = 'users.User'
-
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# Logging Settings
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{levelname}] {asctime} {module}: {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",  # 모든 로그 출력
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "level": "DEBUG",  # Django 전체 로깅 레벨
+        "handlers": ["console"],
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",  # Django 로그 활성화
+            "propagate": False,
+        },
+        "users": {
+            "handlers": ["console"],
+            "level": "DEBUG",  # `users` 앱의 DEBUG 로그 활성화
+            "propagate": False,
+        },
+    },
+}
