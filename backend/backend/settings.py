@@ -59,7 +59,7 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_HTTP_ONLY": True,
     "AUTH_COOKIE_SECURE": os.getenv("USE_RENDER_DB", "False") == "True",  # 개발 환경에서는 False, 운영 환경에서는 True
     "AUTH_COOKIE_PATH": "/",
-    "AUTH_COOKIE_SAMESITE": "Lax",
+    "AUTH_COOKIE_SAMESITE": "None",
 }
 
 CSRF_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
