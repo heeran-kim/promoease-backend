@@ -17,4 +17,4 @@ test/
 ai-api/uploads/
 
 # Ignore .pem
-.pem
+*.pem
