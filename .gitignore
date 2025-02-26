@@ -15,3 +15,6 @@ test/
 
 # Ignore uploaded images
 ai-api/uploads/
+
+# Ignore .pem
+.pem
