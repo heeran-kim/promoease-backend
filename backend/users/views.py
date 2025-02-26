@@ -61,9 +61,13 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         tokens = serializer.validated_data  # Returns {'access': ..., 'refresh': ...}
-        response = Response({"message": "Login successful"}, status=status.HTTP_200_OK)
 
-        # Set JWT in HttpOnly Secure Cookie
+        response = Response({
+            "message": "Login successful",
+            "refresh": tokens["refresh"], # Return refresh token in response
+        }, status=status.HTTP_200_OK)
+
+        # Set JWT access token in HttpOnly Secure Cookie
         response.set_cookie(
             key=settings.SIMPLE_JWT["AUTH_COOKIE"],  # Cookie Name
             value=tokens["access"],  # Save access token
@@ -95,7 +99,10 @@ class LogoutView(APIView):
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
         # Delete JWT access token from cookies
-        response.delete_cookie(settings.SIMPLE_JWT["AUTH_COOKIE"])
+        response.delete_cookie(settings.SIMPLE_JWT["AUTH_COOKIE"], httponly=True)
+
+        # Remove Refresh Token from HttpOnly Cookie
+        response.delete_cookie("refresh_token")
 
         # Blacklist the refresh token (optional, only if using blacklisting)
         refresh_token = request.data.get("refresh")
@@ -129,3 +136,48 @@ class UserProfileView(APIView):
             "name": user.name,
             "role": user.role
         })
+
+class RefreshTokenView(APIView):
+    """
+    API to refresh access token using the stored refresh token.
+    - If the refresh token is valid, returns a new access and refresh token.
+    - If invalid or expired, requires re-authentication.
+    """
+    permission_classes = [AllowAny]  # No authentication required, only valid refresh token needed
+
+    def post(self, request):
+        """
+        Handles refresh token requests.
+        - Extracts refresh token
+        - Generates a new access token and refresh token if valid
+        """
+        logger.info("🛠 Refresh token request received")
+
+        refresh_token = request.data.get("refresh") # Get refresh token from request body
+        if not refresh_token:
+            return Response({"error": "Refresh token is missing"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            token = RefreshToken(refresh_token)
+            new_access_token = str(token.access_token)
+            new_refresh_token = str(token)
+
+            # Set Access Token as HttpOnly Cookie
+            response = Response({
+                "message": "Access token refreshed",
+                "refresh": new_refresh_token, # Return new refresh token
+            }, status=status.HTTP_200_OK)
+
+            response.set_cookie(
+                key=settings.SIMPLE_JWT["AUTH_COOKIE"],  # Cookie Name
+                value=new_access_token,  # Save access token
+                httponly=settings.SIMPLE_JWT["AUTH_COOKIE_HTTP_ONLY"],  # Secure Cookie
+                secure=settings.SIMPLE_JWT["AUTH_COOKIE_SECURE"],  # HTTPS-only
+                samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"],  # Cross-site protection
+                max_age=60 * 60 * 24,  # Valid for 1 day
+            )
+            logger.info("✅ Access token successfully refreshed")
+            return response
+        except Exception as e:
+            logger.error(f"❌ Failed to refresh token: {e}")
+            return Response({"error": "Invalid or expired refresh token"}, status=status.HTTP_401_UNAUTHORIZED)
