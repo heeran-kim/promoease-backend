@@ -5,4 +5,7 @@ services:
     command: >
       sh -c "pip install watchdog &&
              python manage.py migrate &&
-             watchmedo auto-restart --patterns='*.py' --recursive -- python manage.py runserver 0.0.0.0:8000"
+             watchmedo auto-restart --patterns='*.py' --recursive -- python manage.py runsslserver 
+                                                                                    --certificate=localhost.pem 
+                                                                                    --key=localhost-key.pem 
+                                                                                    0.0.0.0:8000"

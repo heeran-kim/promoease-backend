@@ -65,3 +65,4 @@ django-cors-headers
 djangorestframework-simplejwt
 dj-database-url
 beautifulsoup4
+django-sslserver
