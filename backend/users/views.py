@@ -99,7 +99,7 @@ class LogoutView(APIView):
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
         # Delete JWT access token from cookies
-        response.delete_cookie(settings.SIMPLE_JWT["AUTH_COOKIE"], httponly=True)
+        response.delete_cookie(settings.SIMPLE_JWT["AUTH_COOKIE"])
 
         # Remove Refresh Token from HttpOnly Cookie
         response.delete_cookie("refresh_token")
