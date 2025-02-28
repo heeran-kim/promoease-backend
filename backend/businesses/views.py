@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from businesses.models import Business
-from social_media.models import SocialMedia
+from social.models import SocialMedia
 from posts.models import Post
 
 @api_view(["GET"])
