@@ -20,7 +20,7 @@
     "model": "users.user",
     "pk": 2,
     "fields": {
-        "password": "pbkdf2_sha256$870000$363cwxJVLUyJmcCsoSS5C5$zLZ+tgZ3XNPLrUX75LR4YQsUEV1KLHvMzd5eSwK3AhI=",
+        "password": "pbkdf2_sha256$870000$rivwnR9SyN3YlMGsE0IaOi$/8Ple1J0G/EbTtYzg5rEI10G0lbXPFuDldUxsvtSJTM=",
         "last_login": null,
         "is_superuser": false,
         "email": "owner@example.com",
