@@ -1,3 +1,4 @@
+# config/constants.py
 # User Roles (Used in users/models.py & users/managers.py)
 ROLE_CHOICES = [
     {"key": "admin", "label": "Admin"},
@@ -5,6 +6,7 @@ ROLE_CHOICES = [
 ]
 
 DEFAULT_ROLE = "business_owner"
+DEFAULT_LOGO_URL = "/static/images/default_logo.png"
 
 # Social Media Platforms (Used in social/models.py & posts/models.py)
 SOCIAL_PLATFORMS = [

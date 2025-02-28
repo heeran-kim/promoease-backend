@@ -1,15 +1,20 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from businesses.models import Business
 from social.models import SocialMedia
 from posts.models import Post
+from config.constants import DEFAULT_LOGO_URL
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def get_dashboard_data(request):
     business = Business.objects.filter(owner=request.user).first()
 
     if not business:
         return Response({"error": "Business not found"}, status=404)
+
+    logo_url = getattr(business.logo, "url", DEFAULT_LOGO_URL)
 
     social_media = SocialMedia.objects.filter(business=business)
     social_media_data = [
@@ -29,13 +34,13 @@ def get_dashboard_data(request):
         "uploadedPosts": posts.filter(status="uploaded").count(),
         "failedPosts": posts.filter(status="failed").count(),
         "lastActivity": last_post.created_at.strftime("%Y-%m-%d %H:%M:%S") if last_post else None,
-        "lastPostLink": last_post.link if last_post else None,
+        "lastPostLink": getattr(last_post, "link", None) if last_post else None,
     }
 
     response_data = {
         "business": {
             "name": business.name,
-            "logo": business.logo.url if business.logo else "",
+            "logo": logo_url,
         },
         "socialMedia": social_media_data,
         "postsSummary": posts_summary,
