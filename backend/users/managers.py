@@ -1,5 +1,8 @@
 from django.contrib.auth.models import BaseUserManager
 from config.constants import ROLE_CHOICES, DEFAULT_ROLE
+import logging
+
+logger = logging.getLogger(__name__)
 
 class UserManager(BaseUserManager):
     """Custom manager for the User model, handling user and supersuer creation."""
