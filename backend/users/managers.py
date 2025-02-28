@@ -12,8 +12,8 @@ class UserManager(BaseUserManager):
             raise ValueError("The Name field must be set")
         if not password:
             raise ValueError("The Password field must be set")
-        if role not in [choice[0] for choice in ROLE_CHOICES]:
-            raise ValueError(f"Invalid role. Choose one of: {[choice[0] for choice in ROLE_CHOICES]}")
+        if role not in [choice["key"] for choice in ROLE_CHOICES]:
+            raise ValueError(f"Invalid role. Choose one of: {[choice['key'] for choice in ROLE_CHOICES]}")
 
         email = self.normalize_email(email.strip()) # Remove spaces, normalize format
         user = self.model(email=email, name=name, role=role, **extra_fields)
