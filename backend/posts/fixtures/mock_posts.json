@@ -141,7 +141,7 @@
     },
     {
     "model": "posts.post",
-    "pk": 7,
+    "pk": 8,
     "fields": {
         "business":1,
         "platform":3,
@@ -161,7 +161,7 @@
     },
     {
     "model": "posts.post",
-    "pk": 8,
+    "pk": 9,
     "fields": {
         "business":1,
         "platform":1,
@@ -181,7 +181,7 @@
     },
     {
     "model": "posts.post",
-    "pk": 9,
+    "pk": 10,
     "fields": {
         "business":1,
         "platform":2,

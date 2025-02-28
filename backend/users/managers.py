@@ -18,6 +18,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email.strip()) # Remove spaces, normalize format
         user = self.model(email=email, name=name, role=role, **extra_fields)
         user.set_password(password) # Hash and store the password
+        logger.info(f"password: {user.password}")  
         user.save(using=self._db)
         return user
 

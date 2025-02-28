@@ -8,7 +8,7 @@
         "is_superuser": true,
         "email": "admin@example.com",
         "name": "Admin User",
-        "role": "business_owner",
+        "role": "admin",
         "is_active": true,
         "is_staff": true,
         "date_joined": "2025-02-28T00:53:21.509Z",
