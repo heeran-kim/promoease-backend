@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'businesses',
     'social',
     'posts',
-    "sslserver",
+    "django_extensions",
 ]
 
 # JWT Settings

@@ -166,6 +166,33 @@ docker run --env-file .env -d -p 8000:8000 my-app
 
 ---
 
+## **🔹 Step 5: Set Up HTTPS in WSL2 with `mkcert`**
+Run inside WSL2 (Ubuntu, inside your project directory):
+
+### ✅ **1. Install `mkcert`**
+```sh
+sudo apt install libnss3-tools
+wget -q https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64 -O mkcert
+chmod +x mkcert
+sudo mv mkcert /usr/local/bin/
+```
+Run:
+```sh
+mkcert -install
+```
+
+### ✅ **2. Generate a Local SSL Certificate**
+```sh
+mkcert localhost
+```
+This creates:
+```sh
+localhost.pem (Certificate)
+localhost-key.pem (Private Key)
+```
+
+---
+
 ## 🎯 **Done! Your Git + Docker + WSL2 setup is complete. 🚀**
 Now you can run Linux-based containers **seamlessly inside Windows**.
 
