@@ -2,4 +2,9 @@ FROM python:3.11
 WORKDIR /app
 COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py flush --noinput && python manage.py loaddata users/fixtures/mock_users.json businesses/fixtures/mock_businesses.json social/fixtures/mock_social.json posts/fixtures/mock_posts.json && python manage.py runserver 0.0.0.0:8000"]
+
+# Ensure the entrypoint script is executable
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+
