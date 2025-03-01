@@ -63,7 +63,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True, # Invalidate the previous Refresh Token after rotation
     "AUTH_HEADER_TYPES": ("Bearer",),
 
-    # ✅ (HttpOnly 쿠키 지원)
+    # ✅ HttpOnly Cookie
     "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
     "AUTH_COOKIE_SECURE": os.getenv("ENV", "development") == "production",
@@ -71,29 +71,26 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "None",
 }
 
-CSRF_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
 SESSION_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
+
+# CSRF Settings
+CSRF_COOKIE_SECURE = SIMPLE_JWT["AUTH_COOKIE_SECURE"]
+CSRF_COOKIE_DOMAIN = None 
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+
+# CORS Settings
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = CORS_ALLOWED_ORIGINS = os.getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000"
+).split(",")
 
 # DRF Default Authentication Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication', # Authorization header
         "users.authentication.CustomJWTAuthentication", # http cookie
     ),
 }
-
-# CORS Settings
-CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOWED_ORIGINS = [
-#     origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin
-# ]
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,https://promoease-frontend.vercel.app").split(",")
-
-# Allow all headers and methods for pre-flight (OPTIONS) requests
-# CORS_ALLOW_HEADERS = ["*"]
-# CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-
 
 # Middleware Settings
 MIDDLEWARE = [
