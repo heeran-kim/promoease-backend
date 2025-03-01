@@ -66,3 +66,5 @@ djangorestframework-simplejwt
 dj-database-url
 beautifulsoup4
 django-extensions
+Werkzeug
+pyOpenSSL

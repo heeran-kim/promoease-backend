@@ -18,3 +18,5 @@ ai-api/uploads/
 
 # Ignore .pem
 *.pem
+*.crt
+*.key
