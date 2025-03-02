@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
         "business":1,
-        "platform":1,
+        "platform":"instagram",
         "link":"instagram.com/the-great-steakhouse",
         "username":"the-great-steakhouse"
     }
@@ -14,7 +14,7 @@
     "pk": 2,
     "fields": {
         "business":1,
-        "platform":2,
+        "platform":"facebook",
         "link":"facebook.com/the-great-steakhouse",
         "username":"the-great-steakhouse"
     }
@@ -24,7 +24,7 @@
     "pk": 3,
     "fields": {
         "business":1,
-        "platform":3,
+        "platform":"twitter",
         "link":"x.com/the-great-steakhouse",
         "username":"the-great-steakhouse"
     }
