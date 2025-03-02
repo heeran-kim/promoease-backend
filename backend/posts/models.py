@@ -3,7 +3,7 @@ from businesses.models import Business
 from social.models import SocialMedia
 from config.constants import POST_CATEGORIES_OPTIONS, POST_STATUS_OPTIONS
 
-class Categorie(models.Model):
+class Category(models.Model):
     key = models.CharField(max_length=50, unique=True)  # Category key (e.g., 'brand_story')
     label = models.CharField(max_length=100)  # Display name for the category (e.g., 'Brand Story')
 
@@ -13,7 +13,7 @@ class Categorie(models.Model):
 class Post(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="posts")
     platform = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, related_name="posts")
-    categories = models.ManyToManyField(Categorie, related_name="posts")
+    categories = models.ManyToManyField(Category, related_name="posts")
     caption = models.TextField()  # Text for the post's caption or message
     image = models.ImageField(upload_to="post_images/")
     link = models.URLField(blank=True, null=True)  # Optional URL (e.g., link to a website)
