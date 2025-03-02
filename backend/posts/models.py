@@ -1,9 +1,9 @@
 from django.db import models
 from businesses.models import Business
 from social.models import SocialMedia
-from config.constants import POST_CATEGORY_OPTIONS, POST_STATUS_OPTIONS
+from config.constants import POST_CATEGORIES_OPTIONS, POST_STATUS_OPTIONS
 
-class Category(models.Model):
+class Categories(models.Model):
     key = models.CharField(max_length=50, unique=True)  # Category key (e.g., 'brand_story')
     label = models.CharField(max_length=100)  # Display name for the category (e.g., 'Brand Story')
 
@@ -13,7 +13,7 @@ class Category(models.Model):
 class Post(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="posts")
     platform = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, related_name="posts")
-    category = models.ManyToManyField(Category, related_name="posts")
+    categories = models.ManyToManyField(Categories, related_name="posts")
     caption = models.TextField()  # Text for the post's caption or message
     image = models.ImageField(upload_to="post_images/")
     link = models.URLField(blank=True, null=True)  # Optional URL (e.g., link to a website)
@@ -31,7 +31,7 @@ class Post(models.Model):
     shares = models.IntegerField(default=0)
     
     def __str__(self):
-        return f"Post: {self.category} - {self.caption}"
+        return f"Post: {self.categories} - {self.caption}"
 
     class Meta:
         ordering = ['-created_at']

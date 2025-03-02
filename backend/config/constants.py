@@ -17,7 +17,7 @@ SOCIAL_PLATFORMS = [
 ]
 
 # Post Categories (Used in posts/models.py)
-POST_CATEGORY_OPTIONS = [
+POST_CATEGORIES_OPTIONS = [
     {"key": "brand_story", "label": "Brand Story"},
     {"key": "product_highlight", "label": "Product Highlight"},
     {"key": "deal_discount", "label": "Deals & Discounts"},
@@ -32,7 +32,7 @@ POST_STATUS_OPTIONS = [
 ]
 
 # Promotion Categories (Used in posts/models.py)
-PROMOTION_CATEGORY_OPTIONS = [
+PROMOTION_CATEGORIES_OPTIONS = [
     {"key": "discount", "label": "Deals & Discounts"},
     {"key": "bundle", "label": "Combos & Bundles"},
     {"key": "trend", "label": "Trending Now"},

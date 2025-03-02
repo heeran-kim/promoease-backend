@@ -5,7 +5,7 @@ from config.constants import SOCIAL_PLATFORMS
 
 class PostSerializer(serializers.ModelSerializer):
     platform = serializers.SerializerMethodField()
-    category = serializers.SerializerMethodField()
+    categories = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -16,5 +16,5 @@ class PostSerializer(serializers.ModelSerializer):
             return dict(SOCIAL_PLATFORMS).get(obj.platform.platform, obj.platform.platform)
         return None
 
-    def get_category(self, obj):
-        return [cat.label for cat in obj.category.all()]
+    def get_categories(self, obj):
+        return [cat.label for cat in obj.categories.all()]
