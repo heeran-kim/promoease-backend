@@ -1,6 +1,6 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
-from posts.models import Categories
+from posts.models import Category
 from config.constants import POST_CATEGORIES_OPTIONS
 
 @receiver(post_migrate)
