@@ -147,10 +147,8 @@ POSTGRES_PASSWORD=your-db-password
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
 USE_RENDER_DB=false
-CORS_ALLOWED_ORIGINS=http://localhost:3000,https://your-frontend-url.com
+CORS_ALLOWED_ORIGINS=https://localhost:3000,https://your-frontend-url.com
 ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,your-frontend-url.com
-ENV=development
-USE_SQLITE=false
 ```
 
 ### ✅ **2. Restart Docker to Load the `.env` File**

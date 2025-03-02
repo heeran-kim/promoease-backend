@@ -66,7 +66,7 @@ SIMPLE_JWT = {
     # ✅ HttpOnly Cookie
     "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
-    "AUTH_COOKIE_SECURE": os.getenv("ENV", "development") == "production",
+    "AUTH_COOKIE_SECURE": True,
     "AUTH_COOKIE_PATH": "/",
     "AUTH_COOKIE_SAMESITE": "None",
 }
