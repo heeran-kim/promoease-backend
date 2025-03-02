@@ -5,7 +5,7 @@ from businesses.models import Business
 from social.models import SocialMedia
 from posts.models import Post
 from posts.serializers import PostSerializer
-from posts.constants import POST_CATEGORIES_OPTIONS, SOCIAL_PLATFORMS
+from config.constants import POST_CATEGORIES_OPTIONS, SOCIAL_PLATFORMS
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
