@@ -14,3 +14,4 @@ python manage.py flush --noinput
 echo "Loading fixture data..."
 python manage.py loaddata users/fixtures/mock_users.json businesses/fixtures/mock_businesses.json social/fixtures/mock_social.json posts/fixtures/mock_posts.json promotions/fixtures/mock_promotions.json
 
+exec "$@"
