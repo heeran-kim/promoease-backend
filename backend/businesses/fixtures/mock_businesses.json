@@ -5,7 +5,7 @@
     "fields": {
         "name":"The Great Steakhouse",
         "logo":"/the-great-steakhouse.jpg",
-        "type":"Restaurant",
+        "category":"Restaurant",
         "target":"18-35 years old, mostly foodies",
         "vibe":"Cozy & premium dining experience",
         "owner":2,
