@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from django.forms.models import model_to_dict
 from businesses.models import Business
 from social.models import SocialMedia
 from posts.models import Post
@@ -47,3 +48,18 @@ def get_dashboard_data(request):
     }
 
     return Response(response_data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_business_data(request):
+    business = Business.objects.filter(owner=request.user).first()
+
+    if not business:
+        return Response({"error": "Business not found"}, status=404)
+
+    business_data = model_to_dict(business)
+
+    business_data["logo"] = business.logo.url if business.logo else DEFAULT_LOGO_URL
+
+    return Response(business_data)
