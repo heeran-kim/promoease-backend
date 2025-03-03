@@ -9,3 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["python", "manage.py", "runserver_plus", "--cert-file", "/app/localhost.pem", "--key-file", "/app/localhost-key.pem", "0.0.0.0:8000"]
