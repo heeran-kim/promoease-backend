@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'businesses',
     'social',
     'posts',
+    'promotions',
     "django_extensions",
 ]
 

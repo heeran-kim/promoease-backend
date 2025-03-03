@@ -39,3 +39,9 @@ PROMOTION_CATEGORIES_OPTIONS = [
     {"key": "menu", "label": "New Menu Ideas"},
     {"key": "social", "label": "Social Media Content"},
 ]
+
+PROMOTION_STATUS_OPTIONS = [
+    ('upcoming', 'Upcoming'),
+    ('ongoing', 'Ongoing'),
+    ('ended', 'Ended'),
+]

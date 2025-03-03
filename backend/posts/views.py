@@ -15,7 +15,7 @@ def show(request):
     if not business:
         return Response({"error": "Business not found"}, status=404)
 
-    posts = Post.objects.filter(business=business)
+    posts = Post.objects.filter(business=business).order_by("-created_at")
     serialized_posts = PostSerializer(posts, many=True).data
 
     response_data = {
@@ -32,13 +32,21 @@ def create(request):
     if not business:
         return Response({"error": "Business not found"}, status=404)
 
-    post_categories = [category["label"] for category in POST_CATEGORIES_OPTIONS]
+    post_categories = [
+        {"id": index + 1, "label": category["label"], "selected": False}  # ✅ id 추가
+        for index, category in enumerate(POST_CATEGORIES_OPTIONS)
+    ]
 
     platform_options = [platform["label"] for platform in SOCIAL_PLATFORMS]
 
     social_media_platforms = SocialMedia.objects.filter(business=business)
     platform_states = [
-        {"label": next((p["label"] for p in SOCIAL_PLATFORMS if p["key"] == social.platform), social.platform), "selected": False}
+        {
+            "label": next((p["label"] for p in SOCIAL_PLATFORMS if p["key"] == social.platform), social.platform),
+            "account": social.username,
+            "selected": False,
+            "caption": "",
+        }
         for social in social_media_platforms
     ]
 
