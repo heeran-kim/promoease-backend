@@ -68,4 +68,3 @@ beautifulsoup4
 django-extensions
 Werkzeug
 pyOpenSSL
-gunicorn
