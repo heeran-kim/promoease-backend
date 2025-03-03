@@ -3,7 +3,7 @@
 set -e  # Exit immediately if a command fails
 
 echo "Making database migrations..."
-python manage.py makemigrations
+python manage.py makemigrations --noinput
 
 echo "Applying database migrations..."
 python manage.py migrate --noinput
