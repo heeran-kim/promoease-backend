@@ -8,4 +8,3 @@ def populate_promotion_categories(sender, **kwargs):
     if sender.name == "promotions":
         for option in PROMOTION_CATEGORIES_OPTIONS:
             PromotionCategories.objects.get_or_create(key=option["key"], label=option["label"])
-        print("✅ Promotion Categories populated successfully after migration!")

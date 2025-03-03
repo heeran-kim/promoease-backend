@@ -5,7 +5,6 @@ from config.constants import POST_CATEGORIES_OPTIONS
 
 @receiver(post_migrate)
 def populate_categories(sender, **kwargs):
-    if sender.name == "posts":  # Ensure it runs only for the "posts" app
+    if sender.name == "posts":
         for option in POST_CATEGORIES_OPTIONS:
             Category.objects.get_or_create(key=option["key"], label=option["label"])
-        print("✅ Categories populated successfully after migration!")

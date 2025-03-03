@@ -64,7 +64,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True, # Invalidate the previous Refresh Token after rotation
     "AUTH_HEADER_TYPES": ("Bearer",),
 
-    # ✅ HttpOnly Cookie
+    # HttpOnly Cookie
     "AUTH_COOKIE": "access_token", # Cookie name for storing the Access Token
     "AUTH_COOKIE_HTTP_ONLY": True,
     "AUTH_COOKIE_SECURE": True,
@@ -198,24 +198,24 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",  # 모든 로그 출력
+            "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
     },
     "root": {
-        "level": "DEBUG",  # Django 전체 로깅 레벨
+        "level": "DEBUG",
         "handlers": ["console"],
     },
     "loggers": {
         "django": {
             "handlers": ["console"],
-            "level": "DEBUG",  # Django 로그 활성화
+            "level": "DEBUG",
             "propagate": False,
         },
         "users": {
             "handlers": ["console"],
-            "level": "DEBUG",  # `users` 앱의 DEBUG 로그 활성화
+            "level": "DEBUG",
             "propagate": False,
         },
     },

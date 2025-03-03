@@ -35,7 +35,6 @@ class RegisterView(generics.CreateAPIView):
         - Calls the parent `create()` method to handle registration
         - Modifies the response to return a custom success message
         """
-        logger.info(f"🛠 Register Request Data: {request.data}")
         response = super().create(request, *args, **kwargs)
         response.data = {"message": "User created successfully"}
         return response
@@ -57,7 +56,6 @@ class LoginView(APIView):
         - If successful, returns JWT access & refresh tokens
         - Stores access token in a secure HttpOnly cookie
         """
-        logger.info(f"🛠 Login Request Data: {request.data}")
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         tokens = serializer.validated_data  # Returns {'access': ..., 'refresh': ...}
@@ -76,7 +74,6 @@ class LoginView(APIView):
             samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"],  # Cross-site protection
             max_age=60 * 60 * 24,  # Valid for 1 day
         )
-        logger.info(f"🛠 Set-Cookie Header: {response.cookies}")
         # Return the refresh token in the response (frontend can store it securely)
         return response
 
@@ -94,8 +91,6 @@ class LogoutView(APIView):
         Handles user logout by blacklisting the refresh token.
         - Also removes JWT access token from HttpOnly Cookie.
         """
-        logger.info(f"🛠 Logout Request: {request.user}")
-
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
         # Delete JWT access token from cookies
@@ -118,7 +113,6 @@ class LogoutView(APIView):
             try:
                 token = RefreshToken(refresh_token)
                 token.blacklist()
-                logger.info("✅ Refresh Token Blacklisted")
             except Exception as e:
                 logger.error(f"❌ Failed to blacklist refresh token: {e}")
 
@@ -137,7 +131,6 @@ class UserProfileView(APIView):
         """
         Retrieves user profile details from the authenticated request.
         """
-        logger.info(f"🛠 Received Cookies: {request.COOKIES}")
         user = request.user
         return Response({
             "email": user.email,
@@ -159,8 +152,6 @@ class RefreshTokenView(APIView):
         - Extracts refresh token
         - Generates a new access token and refresh token if valid
         """
-        logger.info("🛠 Refresh token request received")
-
         refresh_token = request.data.get("refresh") # Get refresh token from request body
         if not refresh_token:
             return Response({"error": "Refresh token is missing"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -184,7 +175,6 @@ class RefreshTokenView(APIView):
                 samesite=settings.SIMPLE_JWT["AUTH_COOKIE_SAMESITE"],  # Cross-site protection
                 max_age=60 * 60 * 24,  # Valid for 1 day
             )
-            logger.info("✅ Access token successfully refreshed")
             return response
         except Exception as e:
             logger.error(f"❌ Failed to refresh token: {e}")
