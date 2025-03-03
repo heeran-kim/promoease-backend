@@ -15,9 +15,9 @@ services:
       - key: USE_RENDER_DB
         value: "true"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://localhost:3000,https://promoease-frontend.vercel.app,https://backend-yiuo.onrender.com"
+        value: "https://localhost:3000,https://promoease-frontend.vercel.app,https://backend-n0cs.onrender.com"
       - key: ALLOWED_HOSTS
-        value: "localhost,127.0.0.1,0.0.0.0,promoease-frontend.vercel.app,backend-yiuo.onrender.com"
+        value: "localhost,127.0.0.1,0.0.0.0,promoease-frontend.vercel.app,backend-n0cs.onrender.com"
 
   - name: ai-api
     type: web
